@@ -98,6 +98,7 @@ Each "Program" is a nothing but a per defined setting of temperature at which he
 - Make sure code is readable and maintainable
 
 ## How to do this assignment
-- Create a branch with your emailid
+- Checkout this repository
 - Add your code
-- Notify us when you are done
+- Upload the code to a **private** repository in your own github account
+- Add us in collaborators of your private repository
