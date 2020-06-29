@@ -84,13 +84,16 @@ Each "Program" is a nothing but a per defined setting of temperature at which he
 
 
 ## Tech Requirements
- - Use https://github.com/infinitered/ignite for generating the boiler plate
+
  - Try to componentise everything to the extent possible
  - Try to make components stateless
- - Use MobX for state management
- - Follow the design in Mockups to the extent possible
+ - Use MobX or Redux for state management
+ - Try to follow the design in Mockups to the extent possible
  - Make sure the unit tests are present 
-  
+
+## Optional
+ - You can use https://github.com/infinitered/ignite for generating the boiler plate
+
 ## Good to have
 - Make sure the code is sensibly modularized
 - Make sure the app runs on the iOS
@@ -99,6 +102,6 @@ Each "Program" is a nothing but a per defined setting of temperature at which he
 
 ## How to do this assignment
 - Checkout this repository
-- Add your code
 - Upload the code to a **private** repository in your own github account
 - Add us in collaborators of your private repository
+- Add your code
