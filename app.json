@@ -1,4 +1,12 @@
 {
   "name": "assignment2019",
-  "displayName": "assignment2019"
+  "displayName": "assignment2019",
+  "expo": {
+    "name": "assignment2019",
+    "slug": "assignment2019",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }
