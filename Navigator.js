@@ -55,7 +55,7 @@ export default function TabNavigator() {
           activeTintColor: "#FAB901",
           inactiveTintColor: "white",
           tabStyle: { paddingVertical: 15 },
-          labelStyle:{top: 10, letterSpacing: 1},
+          labelStyle:{top: 10, letterSpacing: 1, fontSize: 8},
           style: {height: "10%"}
         }}
         initialRouteName="Sauna"
