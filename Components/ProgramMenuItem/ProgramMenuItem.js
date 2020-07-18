@@ -9,7 +9,8 @@ export default class ProgramMenuItem extends Component {
   }
 
   render() {
-    let program = this.props.data;
+    let program = this.props.data.program;
+    let selectedProgram = this.props.data.selectedProgram;
     return (
       <TouchableOpacity
         onPress={() => {
@@ -25,14 +26,21 @@ export default class ProgramMenuItem extends Component {
         <Icon
           name={program.icon}
           size={40}
-          color={program.selected ? "#F29100" : "#9A503B"}
+          color={
+            program.programName == selectedProgram.programName
+              ? "#F29100"
+              : "#9A503B"
+          }
         />
         <Text
           style={{
             letterSpacing: 0.5,
             fontSize: 9,
             top: 10,
-            color: program.selected ? "#F29100" : "#9A503B",
+            color:
+              program.programName == selectedProgram.programName
+                ? "#F29100"
+                : "#9A503B",
           }}
         >
           {program.programName.toUpperCase()}

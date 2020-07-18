@@ -19,7 +19,6 @@ export default class Sauna extends Component {
           farTemp: 70,
           sessionTime: 37,
           icon: "refresh-ccw",
-          selected: true,
         },
         {
           programName: "Weight Loss",
@@ -29,7 +28,6 @@ export default class Sauna extends Component {
           farTemp: 75,
           sessionTime: 45,
           icon: "minimize-2",
-          selected: false,
         },
         {
           programName: "Relaxation",
@@ -39,7 +37,6 @@ export default class Sauna extends Component {
           farTemp: 65,
           sessionTime: 40,
           icon: "smile",
-          selected: false,
         },
         {
           programName: "Pain Relief",
@@ -49,7 +46,6 @@ export default class Sauna extends Component {
           farTemp: 80,
           sessionTime: 50,
           icon: "minimize",
-          selected: false,
         },
         {
           programName: "Anti Aging",
@@ -59,7 +55,6 @@ export default class Sauna extends Component {
           farTemp: 70,
           sessionTime: 35,
           icon: "rewind",
-          selected: false,
         },
         {
           programName: "Cardio",
@@ -69,7 +64,6 @@ export default class Sauna extends Component {
           farTemp: 70,
           sessionTime: 43,
           icon: "heart",
-          selected: false,
         },
       ],
       selectedProgram: {},
@@ -86,10 +80,6 @@ export default class Sauna extends Component {
 
   changeActiveProgram(program) {
     this.setState({ selectedProgram: program });
-    this.state.programs.map((program) => {
-      program.selected =
-        program.programName == this.state.selectedProgram.name ? true : false;
-    });
   }
 
   render() {
@@ -106,7 +96,10 @@ export default class Sauna extends Component {
             {this.state.programs.map((program) => {
               return (
                 <ProgramMenuItem
-                  data={program}
+                  data={{
+                    program: program,
+                    selectedProgram: this.state.selectedProgram,
+                  }}
                   callback={this.changeActiveProgram.bind(this)}
                 />
               );
