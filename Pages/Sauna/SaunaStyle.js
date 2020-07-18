@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   headingContainer: {
-    height: "15%",
+    height: "10%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -17,5 +17,26 @@ export default StyleSheet.create({
   },
   programOptions: {
     height: "15%",
+  },
+  programDetails: {
+    flex: 1,
+    // backgroundColor: "red",
+  },
+  startBtnContainer: {
+    height: "20%",
+    width: "100%",
+    padding: "7%",
+  },
+  startBtn: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#9A503B",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  startBtnText: {
+    color: "white",
+    fontSize: 15,
   },
 });

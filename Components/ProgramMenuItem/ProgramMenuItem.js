@@ -4,15 +4,20 @@ import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 export default class ProgramMenuItem extends Component {
+  selectProgram(program) {
+    this.props.callback(program);
+  }
+
   render() {
     let program = this.props.data;
-    console.log("I am called");
     return (
       <TouchableOpacity
+        onPress={() => {
+          this.selectProgram(program);
+        }}
         style={{
           height: "100%",
           minWidth: 75,
-          //   marginHorizontal: 5,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -27,7 +32,7 @@ export default class ProgramMenuItem extends Component {
             letterSpacing: 0.5,
             fontSize: 9,
             top: 10,
-            color: program.selected ? "#F29100" : "#9A503B ",
+            color: program.selected ? "#F29100" : "#9A503B",
           }}
         >
           {program.programName.toUpperCase()}

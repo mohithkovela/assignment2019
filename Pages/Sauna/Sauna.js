@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import styles from "../Sauna/SaunaStyle";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import ProgramMenuItem from "../../Components/ProgramMenuItem/ProgramMenuItem";
+import SelectedProgram from "../../Components/SelectedProgram/SelectedProgram";
 
 export default class Sauna extends Component {
   constructor(props) {
@@ -71,7 +72,24 @@ export default class Sauna extends Component {
           selected: false,
         },
       ],
+      selectedProgram: {},
     };
+  }
+
+  startProgram = () => {
+    alert("program has been started");
+  };
+
+  componentDidMount() {
+    this.setState({ selectedProgram: this.state.programs[0] });
+  }
+
+  changeActiveProgram(program) {
+    this.setState({ selectedProgram: program });
+    this.state.programs.map((program) => {
+      program.selected =
+        program.programName == this.state.selectedProgram.name ? true : false;
+    });
   }
 
   render() {
@@ -86,11 +104,25 @@ export default class Sauna extends Component {
         <View style={styles.programOptions}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {this.state.programs.map((program) => {
-              console.log("calling Program menu item with data", program);
-              return <ProgramMenuItem data={program} />;
+              return (
+                <ProgramMenuItem
+                  data={program}
+                  callback={this.changeActiveProgram.bind(this)}
+                />
+              );
             })}
-            {/* <ProgramMenuItem data={this.state.programs[1]} /> */}
           </ScrollView>
+        </View>
+        <View style={styles.programDetails}>
+          <SelectedProgram data={this.state.selectedProgram}></SelectedProgram>
+        </View>
+        <View style={styles.startBtnContainer}>
+          <TouchableOpacity
+            style={styles.startBtn}
+            onPress={() => this.startProgram()}
+          >
+            <Text style={styles.startBtnText}>Start Program</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     );
