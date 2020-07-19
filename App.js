@@ -1,7 +1,9 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import Header from "./Components/Header/Header";
 import TabNavigator from "./Navigator";
+
+const windowHeight = Dimensions.get('window').height;
 
 export default function App() {
   return (
@@ -15,6 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minHeight: windowHeight,
     backgroundColor: "#fff",
   },
 });

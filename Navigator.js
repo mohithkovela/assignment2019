@@ -40,13 +40,7 @@ export default function TabNavigator() {
                 break;
               }
             }
-            return (
-              <Icon
-                name={iconName}
-                size={size}
-                color={color}
-              />
-            );
+            return <Icon name={iconName} size={size} color={color} />;
           },
         })}
         tabBarOptions={{
@@ -54,9 +48,9 @@ export default function TabNavigator() {
           inactiveBackgroundColor: "#9A503B",
           activeTintColor: "#FAB901",
           inactiveTintColor: "white",
-          tabStyle: { paddingVertical: 15 },
-          labelStyle:{top: 10, letterSpacing: 1, fontSize: 8},
-          style: {height: "10%"}
+          tabStyle: { paddingVertical: 10 },
+          labelStyle: { letterSpacing: 1, fontSize: 8 },
+          style: { height: "13%" },
         }}
         initialRouteName="Sauna"
       >

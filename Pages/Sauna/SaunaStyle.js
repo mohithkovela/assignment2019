@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  linearGradient: {
+  pageContainer: {
     flex: 1,
   },
   headingContainer: {
