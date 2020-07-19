@@ -9,6 +9,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+
 import ProgramMenuItem from "../../Components/ProgramMenuItem/ProgramMenuItem";
 import SelectedProgram from "../../Components/SelectedProgram/SelectedProgram";
 
@@ -79,11 +81,39 @@ export default class Sauna extends Component {
       ],
       selectedProgram: {},
       customPrograms: [],
+      programNameEditText: "",
+      sessionLengthEditText: "",
     };
   }
 
   startProgram = () => {
-    alert("program has been started");
+    if (
+      this.state.selectedProgram &&
+      this.state.selectedProgram.programName != "Custom"
+    ) {
+      alert("program has been started");
+    }
+    if (
+      this.state.selectedProgram.programName == "Custom" &&
+      this.state.programNameEditText &&
+      this.state.sessionLengthEditText
+    ) {
+      this.setState({
+        customPrograms: [
+          ...this.state.customPrograms,
+          {
+            programName: this.state.programNameEditText,
+            programDesc: "",
+            nearTemp: 0,
+            midTemp: 60,
+            farTemp: 70,
+            sessionTime: this.state.sessionLengthEditText,
+          },
+        ],
+        programNameEditText: "",
+        sessionLengthEditText: "",
+      });
+    }
   };
 
   componentDidMount() {
@@ -109,9 +139,10 @@ export default class Sauna extends Component {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              {this.state.programs.map((program) => {
+              {this.state.programs.map((program, index) => {
                 return (
                   <ProgramMenuItem
+                    key={index}
                     data={{
                       program: program,
                       selectedProgram: this.state.selectedProgram,
@@ -170,11 +201,15 @@ export default class Sauna extends Component {
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "#9A503B" }}>
             Add Custom Program
           </Text>
-          <Text style={{color: "#9A503B"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+          <Text style={{ color: "#9A503B" }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </Text>
           <TextInput
             placeholderTextColor={"orange"}
-            // onChangeText={(text) => this.setState({ instance: text })}
-            // value={this.state.instance}
+            onChangeText={(text) =>
+              this.setState({ programNameEditText: text })
+            }
+            value={this.state.programNameEditText}
             style={{
               width: "100%",
               backgroundColor: "white",
@@ -187,8 +222,11 @@ export default class Sauna extends Component {
           />
           <TextInput
             placeholderTextColor={"orange"}
-            // onChangeText={(text) => this.setState({ instance: text })}
-            // value={this.state.instance}
+            onChangeText={(text) =>
+              this.setState({ sessionLengthEditText: text })
+            }
+            keyboardType={"numeric"}
+            value={this.state.sessionLengthEditText}
             style={{
               width: "100%",
               backgroundColor: "white",
@@ -199,6 +237,44 @@ export default class Sauna extends Component {
             placeholder="Session Length (Min.)"
           />
         </View>
+      );
+    }
+    if (
+      selectedProgram.programName == "Custom" &&
+      this.state.customPrograms.length != 0
+    ) {
+      return (
+        <ScrollView
+          style={{
+            flex: 1,
+            padding: "5%",
+            alignContent: "center",
+          }}
+          contentContainerStyle={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {this.state.customPrograms.map((program, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={{
+                  width: "40%",
+                  margin: "5%",
+                  minHeight: 100,
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Icon name={"settings"} size={50} color={"#9A503B"}></Icon>
+                <Text style={{ color: "#9A503B" }}>{program.programName}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       );
     }
   }
