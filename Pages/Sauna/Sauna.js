@@ -84,6 +84,7 @@ export default class Sauna extends Component {
       customPrograms: [],
       programNameEditText: "",
       sessionLengthEditText: "",
+      addCustomProgram: false,
     };
   }
 
@@ -115,6 +116,7 @@ export default class Sauna extends Component {
         programNameEditText: "",
         sessionLengthEditText: "",
         selectedCustomProgram: false,
+        editCustomMode: false,
       });
     }
   };
@@ -127,7 +129,8 @@ export default class Sauna extends Component {
     this.setState({
       selectedProgramIndex: selectedProgramIndex,
       selectedProgram: this.state.programs[selectedProgramIndex],
-      selectedCustomProgram: false
+      selectedCustomProgram: false,
+      editCustomMode: false,
     });
   }
 
@@ -164,35 +167,61 @@ export default class Sauna extends Component {
           <View style={styles.programDetails}>
             {this.displayProgramDetails(this.state.selectedProgram)}
           </View>
-          <View style={styles.startBtnContainer}>
-            <TouchableOpacity
-              style={styles.startBtn}
-              onPress={() => this.startProgram()}
-            >
-              {this.getStartButtonText(this.state.selectedProgram)}
-            </TouchableOpacity>
-          </View>
+          <View style={styles.startBtnContainer}>{this.getStartButton()}</View>
         </LinearGradient>
       </KeyboardAvoidingView>
     );
   }
+
+  getStartButton() {
+    if (
+      this.state.selectedProgramIndex == 6 &&
+      this.state.customPrograms.length != 0 &&
+      !this.state.selectedCustomProgram &&
+      !this.state.editCustomMode
+    ) {
+      return (
+        <TouchableOpacity
+          style={styles.addCustomProgramButton}
+          onPress={() => this.setAddCustomProgramMode()}
+        >
+          {this.getStartButtonText(this.state.selectedProgram)}
+        </TouchableOpacity>
+      );
+    }
+    return (
+      <TouchableOpacity
+        style={styles.startBtn}
+        onPress={() => this.startProgram()}
+      >
+        {this.getStartButtonText(this.state.selectedProgram)}
+      </TouchableOpacity>
+    );
+  }
+
+  setAddCustomProgramMode = () => {
+    this.setState({ editCustomMode: true });
+  };
 
   getStartButtonText(selectedProgram) {
     if (selectedProgram && selectedProgram.programName != "Custom") {
       return <Text style={styles.startBtnText}>Start Program</Text>;
     }
     if (
-      selectedProgram.programName == "Custom" &&
-      this.state.customPrograms.length == 0
+      (this.state.selectedProgramIndex == 6 &&
+        this.state.customPrograms.length == 0) ||
+      this.state.editCustomMode
     ) {
       return <Text style={styles.startBtnText}>Save & Customize Heaters</Text>;
     }
+    return <Text style={styles.startBtnText}>+</Text>;
   }
 
   displayProgramDetails(selectedProgram) {
     if (
-      this.state.selectedProgramIndex == 6 &&
-      this.state.customPrograms.length == 0
+      (this.state.selectedProgramIndex == 6 &&
+        this.state.customPrograms.length == 0) ||
+      this.state.editCustomMode
     ) {
       return (
         <View
