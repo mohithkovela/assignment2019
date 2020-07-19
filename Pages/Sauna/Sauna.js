@@ -120,7 +120,7 @@ export default class Sauna extends Component {
   };
 
   componentDidMount() {
-    this.setState({ selectedProgram: this.state.programs[6] });
+    this.setState({ selectedProgram: this.state.programs[0] });
   }
 
   changeActiveProgram(selectedProgramIndex) {
