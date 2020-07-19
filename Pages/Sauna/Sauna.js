@@ -80,6 +80,7 @@ export default class Sauna extends Component {
         },
       ],
       selectedProgram: {},
+      selectedProgramIndex: 0,
       customPrograms: [],
       programNameEditText: "",
       sessionLengthEditText: "",
@@ -104,14 +105,16 @@ export default class Sauna extends Component {
           {
             programName: this.state.programNameEditText,
             programDesc: "",
-            nearTemp: 0,
+            nearTemp: 60,
             midTemp: 60,
             farTemp: 70,
             sessionTime: this.state.sessionLengthEditText,
+            icon: "settings",
           },
         ],
         programNameEditText: "",
         sessionLengthEditText: "",
+        selectedCustomProgram: false,
       });
     }
   };
@@ -120,8 +123,12 @@ export default class Sauna extends Component {
     this.setState({ selectedProgram: this.state.programs[6] });
   }
 
-  changeActiveProgram(program) {
-    this.setState({ selectedProgram: program });
+  changeActiveProgram(selectedProgramIndex) {
+    this.setState({
+      selectedProgramIndex: selectedProgramIndex,
+      selectedProgram: this.state.programs[selectedProgramIndex],
+      selectedCustomProgram: false
+    });
   }
 
   render() {
@@ -145,6 +152,7 @@ export default class Sauna extends Component {
                     key={index}
                     data={{
                       program: program,
+                      programIndex: index,
                       selectedProgram: this.state.selectedProgram,
                     }}
                     callback={this.changeActiveProgram.bind(this)}
@@ -182,11 +190,8 @@ export default class Sauna extends Component {
   }
 
   displayProgramDetails(selectedProgram) {
-    if (selectedProgram && selectedProgram.programName != "Custom") {
-      return <SelectedProgram data={selectedProgram}></SelectedProgram>;
-    }
     if (
-      selectedProgram.programName == "Custom" &&
+      this.state.selectedProgramIndex == 6 &&
       this.state.customPrograms.length == 0
     ) {
       return (
@@ -238,10 +243,10 @@ export default class Sauna extends Component {
           />
         </View>
       );
-    }
-    if (
-      selectedProgram.programName == "Custom" &&
-      this.state.customPrograms.length != 0
+    } else if (
+      this.state.selectedProgramIndex == 6 &&
+      this.state.customPrograms.length != 0 &&
+      !this.state.selectedCustomProgram
     ) {
       return (
         <ScrollView
@@ -268,6 +273,12 @@ export default class Sauna extends Component {
                   justifyContent: "space-around",
                   alignItems: "center",
                 }}
+                onPress={() => {
+                  this.setState({
+                    selectedProgram: program,
+                    selectedCustomProgram: true,
+                  });
+                }}
               >
                 <Icon name={"settings"} size={50} color={"#9A503B"}></Icon>
                 <Text style={{ color: "#9A503B" }}>{program.programName}</Text>
@@ -276,6 +287,10 @@ export default class Sauna extends Component {
           })}
         </ScrollView>
       );
+    } else {
+      if (selectedProgram) {
+        return <SelectedProgram data={selectedProgram}></SelectedProgram>;
+      }
     }
   }
 }

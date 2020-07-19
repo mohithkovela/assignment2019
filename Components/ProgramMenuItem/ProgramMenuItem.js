@@ -4,17 +4,18 @@ import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 export default class ProgramMenuItem extends Component {
-  selectProgram(program) {
-    this.props.callback(program);
+  selectProgram(index) {
+    this.props.callback(index);
   }
 
   render() {
     let program = this.props.data.program;
+    let programIndex = this.props.data.programIndex;
     let selectedProgram = this.props.data.selectedProgram;
     return (
       <TouchableOpacity
         onPress={() => {
-          this.selectProgram(program);
+          this.selectProgram(programIndex);
         }}
         style={{
           height: "100%",
