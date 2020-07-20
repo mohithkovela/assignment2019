@@ -97,14 +97,31 @@ export default class Sauna extends Component {
   }
 
   startProgram = () => {
-    if (
-      this.state.selectedProgram &&
-      this.state.selectedProgram.programName != "Custom"
-    ) {
-      alert("program has been started");
+    if (this.state.editCustomMode) {
+      let customPrograms = this.state.customPrograms.slice();
+
+      console.log("custom programs", customPrograms);
+
+      customPrograms[
+        this.state.selectedCustomProgramIndex
+      ].programName = this.state.programNameEditText;
+      customPrograms[
+        this.state.selectedCustomProgramIndex
+      ].sessionTime = this.state.sessionLengthEditText;
+
+      this.setState({
+        customPrograms: customPrograms,
+        programNameEditText: "",
+        sessionLengthEditText: "",
+        editCustomMode: false,
+      });
+
+      alert("Program Updated");
+      return;
     }
+
     if (
-      this.state.selectedProgram.programName == "Custom" &&
+      this.state.selectedProgramIndex == 6 &&
       this.state.programNameEditText &&
       this.state.sessionLengthEditText
     ) {
@@ -126,7 +143,10 @@ export default class Sauna extends Component {
         selectedCustomProgram: false,
         editCustomMode: false,
       });
+      return;
     }
+
+    alert("program has been started");
   };
 
   componentDidMount() {
@@ -199,7 +219,7 @@ export default class Sauna extends Component {
         <TouchableOpacity
           style={{ padding: 10, marginHorizontal: 10 }}
           onPress={() => {
-            this.editCustomProgram(selectedCustomProgram);
+            this.editCustomProgram();
           }}
         >
           <Icon name={"edit-2"} size={25} color={"#9A503B"}></Icon>
@@ -232,7 +252,15 @@ export default class Sauna extends Component {
     alert("Program Deleted");
   };
 
-  editCustomProgram() {}
+  editCustomProgram() {
+    let activeProgram = this.state.selectedProgram;
+    this.setState({
+      editCustomMode: true,
+      programNameEditText: activeProgram.programName,
+      sessionLengthEditText: activeProgram.sessionTime,
+      selectedCustomProgram: false,
+    });
+  }
 
   getStartButton() {
     if (
@@ -265,9 +293,6 @@ export default class Sauna extends Component {
   };
 
   getStartButtonText(selectedProgram) {
-    if (selectedProgram && selectedProgram.programName != "Custom") {
-      return <Text style={styles.startBtnText}>Start Program</Text>;
-    }
     if (
       (this.state.selectedProgramIndex == 6 &&
         this.state.customPrograms.length == 0) ||
@@ -275,7 +300,15 @@ export default class Sauna extends Component {
     ) {
       return <Text style={styles.startBtnText}>Save & Customize Heaters</Text>;
     }
-    return <Text style={styles.startBtnText}>+</Text>;
+    if (
+      this.state.selectedProgramIndex == 6 &&
+      this.state.customPrograms.length != 0 &&
+      !this.state.selectedCustomProgram
+    ) {
+      return <Text style={styles.startBtnText}>+</Text>;
+    }
+
+    return <Text style={styles.startBtnText}>Start Program</Text>;
   }
 
   displayProgramDetails(selectedProgram) {
