@@ -22,7 +22,8 @@ export default class Sauna extends Component {
       programs: [
         {
           programName: "Detox",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 0,
           midTemp: 60,
           farTemp: 70,
@@ -31,7 +32,8 @@ export default class Sauna extends Component {
         },
         {
           programName: "Weight Loss",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 0,
           midTemp: 70,
           farTemp: 75,
@@ -40,7 +42,8 @@ export default class Sauna extends Component {
         },
         {
           programName: "Relaxation",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 65,
           midTemp: 60,
           farTemp: 65,
@@ -49,7 +52,8 @@ export default class Sauna extends Component {
         },
         {
           programName: "Pain Relief",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 60,
           midTemp: 70,
           farTemp: 80,
@@ -58,7 +62,8 @@ export default class Sauna extends Component {
         },
         {
           programName: "Anti Aging",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 0,
           midTemp: 65,
           farTemp: 70,
@@ -67,7 +72,8 @@ export default class Sauna extends Component {
         },
         {
           programName: "Cardio",
-          programDesc: "",
+          programDesc:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi.",
           nearTemp: 0,
           midTemp: 60,
           farTemp: 70,
@@ -85,6 +91,8 @@ export default class Sauna extends Component {
       programNameEditText: "",
       sessionLengthEditText: "",
       addCustomProgram: false,
+      selectedCustomProgram: false,
+      selectedCustomProgramIndex: null,
     };
   }
 
@@ -167,11 +175,64 @@ export default class Sauna extends Component {
           <View style={styles.programDetails}>
             {this.displayProgramDetails(this.state.selectedProgram)}
           </View>
-          <View style={styles.startBtnContainer}>{this.getStartButton()}</View>
+          <View style={styles.startBtnContainer}>
+            {this.getStartButton()}
+            {this.editDeleteButtons(this.state.selectedCustomProgram)}
+            {/* <View style={{ flex: 1, backgroundColor: "red" }}></View> */}
+          </View>
         </LinearGradient>
       </KeyboardAvoidingView>
     );
   }
+
+  editDeleteButtons(selectedCustomProgram) {
+    return selectedCustomProgram ? (
+      <View
+        style={{
+          // flex: 1,
+          // backgroundColor: "red",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          style={{ padding: 10, marginHorizontal: 10 }}
+          onPress={() => {
+            this.editCustomProgram(selectedCustomProgram);
+          }}
+        >
+          <Icon name={"edit-2"} size={25} color={"#9A503B"}></Icon>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ padding: 10, marginHorizontal: 10 }}
+          onPress={() => {
+            this.deleteCustomProgram();
+          }}
+        >
+          <Icon name={"trash-2"} size={25} color={"#9A503B"}></Icon>
+        </TouchableOpacity>
+      </View>
+    ) : (
+      <View></View>
+    );
+  }
+
+  deleteCustomProgram = () => {
+    let customPrograms = this.state.customPrograms.slice();
+    customPrograms.splice(this.state.selectedCustomProgramIndex, 1);
+    console.log(customPrograms);
+    this.setState({
+      customPrograms: customPrograms,
+      selectedProgram: this.state.programs[6],
+      selectedProgramIndex: 6,
+      selectedCustomProgramIndex: null,
+      selectedCustomProgram: false,
+    });
+    alert("Program Deleted");
+  };
+
+  editCustomProgram() {}
 
   getStartButton() {
     if (
@@ -232,7 +293,14 @@ export default class Sauna extends Component {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#9A503B" }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "#9A503B",
+              marginBottom: 10,
+            }}
+          >
             Add Custom Program
           </Text>
           <Text style={{ color: "#9A503B" }}>
@@ -266,6 +334,7 @@ export default class Sauna extends Component {
               backgroundColor: "white",
               borderRadius: 50,
               fontSize: 20,
+              marginTop: 15,
             }}
             textAlign={"center"}
             placeholder="Session Length (Min.)"
@@ -306,6 +375,7 @@ export default class Sauna extends Component {
                   this.setState({
                     selectedProgram: program,
                     selectedCustomProgram: true,
+                    selectedCustomProgramIndex: index,
                   });
                 }}
               >

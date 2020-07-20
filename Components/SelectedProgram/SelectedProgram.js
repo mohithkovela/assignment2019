@@ -20,7 +20,7 @@ export default class SelectedProgram extends Component {
         <Text style={styles.pageText}>
           {program.programDesc
             ? program.programDesc
-            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent consequat neque nisi, id hendrerit dui lacinia sit amet."}
+            : ""}
         </Text>
         <View style={styles.programDetails}>
           {program.nearTemp ? (

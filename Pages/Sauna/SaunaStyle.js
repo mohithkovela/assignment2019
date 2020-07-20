@@ -23,15 +23,14 @@ export default StyleSheet.create({
     // backgroundColor: "red",
   },
   startBtnContainer: {
-    height: "20%",
+    height: "25%",
     width: "100%",
-    padding: "7%",
-    justifyContent: "center",
-    alignItems: "center"
+    paddingHorizontal: "7%",
+    justifyContent: "space-around",
   },
   startBtn: {
     width: "100%",
-    height: "100%",
+    height: 50,
     backgroundColor: "#9A503B",
     borderRadius: 50,
     alignItems: "center",
@@ -44,6 +43,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center"
   },
   startBtnText: {
     color: "white",
